@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+
+	<style>
+		#statecount {
+			color: #444444;
+			font-size: 14px;
+		}
+
+		#tableinput {
+			margin: 5px;
+		}
+
+		.sizeinput {
+			width: 45px;
+		}
+
+		.cellinput {
+			height: 40px;
+			width: 40px;
+
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			text-align: center;
+		}
+
+		.statetable {
+			border-collapse: collapse;
+			margin: 10px;
+			margin-bottom: 35px;
+		}
+
+		.statetable, .statetable td {
+			border: 1px solid black;
+		}
+
+		.statetable td {
+			height: 32px;
+			width: 32px;
+			text-align: center;
+			vertical-align: middle;
+		}
+	</style>
+</head>
+<body>
+	<label for="height">Height: </label>
+	<input id="height" class="sizeinput" type="number" value="8" min="2" max="127">
+	<label for="width">Width: </label>
+	<input id="width" class="sizeinput" type="number" value="8" min="2" max="127">
+	<input id="buildnew" type="button" value="Build New">
+	<input id="solve" type="button" value="Solve">
+	<input id="stop" type="button" style="display: none" value="Stop">
+	<span id="solving"></span><span id="statecount"></span>
+	<hr>
+
+	<table id="tableinput">
+	</table>
+	<input id="geturl" type="button" value="Get Url shortcut"><span id="urlshort" style="margin-left: 10px"></span>
+	<hr>
+
+	<div id="solutions">
+	</div>
+
+	<script src="heap.js"></script>
+
+	<script src="cell.js"></script>
+	<script src="universe.js"></script>
+	<script src="state.js"></script>
+
+	<script src="index.js"></script>
+</body>
+</html>
+
