@@ -271,10 +271,7 @@ function solve()
 	if(window._universe != null)
 	{
 		if(window._universe.isRunning())
-		{
-			//stopSolving();
 			return;
-		}
 
 		window._universe = null;
 	}
@@ -368,6 +365,14 @@ if(urlvars.solve !== undefined)
 }
 
 document.getElementById("buildnew").addEventListener("click", function(){
+	if(window._universe != null)
+	{
+		if(window._universe.isRunning())
+			stopSolving();
+
+		window._universe = null;
+	}
+
 	buildEmptyTable(e_height.value, e_width.value);
 	deleteSolutions();
 	resetStateInfo();
