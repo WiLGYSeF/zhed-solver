@@ -21,34 +21,7 @@ class Universe
 			this.heuristic = 0;
 		}
 
-		this.goal = null;
-
-		//cells are stored as [x, y] vectors
-
-		for (var y = 0; y < this.height; y++)
-		{
-			for (var x = 0; x < this.width; x++)
-			{
-				if(arr[y][x] == State.GOAL)
-				{
-					if(this.goal == null)
-					{
-						this.goal = new Int32Array(2);
-						this.goal[0] = x;
-						this.goal[1] = y;
-					}else
-					{
-						throw Error("Not supported: cannot handle multiple goal cells");
-					}
-				}
-			}
-		}
-
-		if(this.goal == null)
-			throw Error("Invalid state: no goal cell");
-
-		var gx = this.goal[0];
-		var gy = this.goal[1];
+		this.goals = [];
 
 		this.array = new Int32Array(this.height * this.width);
 		this.goalfront = [];
@@ -56,7 +29,29 @@ class Universe
 		this.inactive = [];
 		this.ready = false;
 
+		var cell;
 		var coord;
+		var gx, gy;
+
+		for (var y = 0; y < this.height; y++)
+		{
+			for (var x = 0; x < this.width; x++)
+			{
+				if(arr[y][x] == State.GOAL)
+				{
+					coord = new Int32Array(2);
+					coord[0] = x;
+					coord[1] = y;
+
+					this.goals.push(coord);
+				}
+			}
+		}
+
+		if(this.goals.length == 0)
+			throw Error("Invalid state: no goal cell");
+
+		//cells are stored as [x, y] vectors
 
 		for (var y = 0; y < this.height; y++)
 		{
@@ -66,27 +61,35 @@ class Universe
 
 				if(arr[y][x] != 0)
 				{
+					coord = new Int32Array(2);
+					coord[0] = x;
+					coord[1] = y;
+
 					if(arr[y][x] == State.GOAL)
 					{
-						//goal already found, skip
+						//already added
 					}else
 					if(arr[y][x] == State.INACTIVE)
 					{
-						coord = new Int32Array(2);
-						coord[0] = x;
-						coord[1] = y;
 						this.inactive.push(coord);
 
 						this.array[y * this.width + x] = 1;
 					}else
 					{
-						coord = new Int32Array(2);
-						coord[0] = x;
-						coord[1] = y;
 						this.active.push(coord);
 
-						if(x == gx || y == gy)
-							this.goalfront.push(new Cell(coord, null, x == gx ? (y < gy ? 2 : 0) : (x < gx ? 1 : 3)));
+						for (var i = 0; i < this.goals.length; i++)
+						{
+							gx = this.goals[i][0];
+							gy = this.goals[i][1];
+
+							if(x == gx || y == gy)
+							{
+								cell = new Cell(coord, null, x == gx ? (y < gy ? 2 : 0) : (x < gx ? 1 : 3));
+								cell.goal = this.goals[i];
+								this.goalfront.push(cell);
+							}
+						}
 					}
 				}
 			}

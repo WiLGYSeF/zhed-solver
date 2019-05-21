@@ -7,6 +7,7 @@ class Cell
 		this.coord = coord;
 		this.parent = parent;
 		this.direction = direction;
+		this.goal = null;
 	}
 
 	findUpwards(coord)

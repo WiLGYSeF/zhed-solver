@@ -193,10 +193,16 @@ function buildStateTable(universe, state, endList)
 			if(active != null && x == active[0] && y == active[1])
 				actividx++;
 
-			if(x == universe.goal[0] && y == universe.goal[1])
+			var goal;
+
+			for (var i = 0; i < universe.goals.length; i++)
 			{
-				//goal
-				data.style.backgroundColor = val != State.GOAL ? "#ffff00" : "#00ff00";
+				goal = universe.goals[i];
+				if(x == goal[0] && y == goal[1])
+				{
+					//goal
+					data.style.backgroundColor = val != State.GOAL ? "#ffff00" : "#00ff00";
+				}
 			}
 
 			row.appendChild(data);

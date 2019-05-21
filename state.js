@@ -47,9 +47,9 @@ class State
 				console.log(gf);
 				console.log(num);
 
-				//scale num between 0 - 3
+				//scale num between 0 - 7
 				var bounds = [0, this.universe.active.length];
-				var newbounds = [0, 3];
+				var newbounds = [0, 7];
 				num = ((num - bounds[0]) / (bounds[1] - bounds[0]) * (newbounds[1] - newbounds[0]) + newbounds[0]);
 				num = -(num | 0);
 
@@ -152,14 +152,10 @@ class State
 	{
 		var interacting = [];
 
-		var parent = cell.parent;
-
 		var cx = cell.coord[0];
 		var cy = cell.coord[1];
-		var gx = this.universe.goal[0];
-		var gy = this.universe.goal[1];
-		var px = parent != null ? parent.coord[0] : gx;
-		var py = parent != null ? parent.coord[1] : gy;
+		var px = cell.parent != null ? cell.parent.coord[0] : cell.goal[0];
+		var py = cell.parent != null ? cell.parent.coord[1] : cell.goal[1];
 
 		var active;
 		var ax, ay;
@@ -375,8 +371,8 @@ class State
 
 		var x = cell.coord[0];
 		var y = cell.coord[1];
-		var px = cell.parent != null ? cell.parent.coord[0] : this.universe.goal[0];
-		var py = cell.parent != null ? cell.parent.coord[1] : this.universe.goal[1];
+		var px = cell.parent != null ? cell.parent.coord[0] : cell.goal[0];
+		var py = cell.parent != null ? cell.parent.coord[1] : cell.goal[1];
 
 		var opencells = 0;
 		var breakout = false;
@@ -502,7 +498,16 @@ class State
 		var array = this.universe.copyArray();
 		this.expandCells(array);
 
-		return this.getArrayVal(array, this.universe.goal[0], this.universe.goal[1]) != State.GOAL;
+		var goal;
+
+		for (var i = 0; i < this.universe.goals.length; i++)
+		{
+			goal = this.universe.goals[i];
+			if(this.getArrayVal(array, goal[0], goal[1]) != State.GOAL)
+				return true;
+		}
+
+		return false;
 	}
 
 	setArrayVal(array, x, y, v)
