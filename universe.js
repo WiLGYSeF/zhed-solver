@@ -126,7 +126,7 @@ class Universe
 			return s.getPriority() - t.getPriority();
 		};
 
-		var explored = new Set();
+		//var explored = new Set();
 		var state, stcopy;
 		var hash;
 		var actions;
@@ -154,7 +154,7 @@ class Universe
 			{
 				this.statistics.actionsDone = actionsDone;
 				this.statistics.checked = checked;
-				this.statistics.explored = explored.size;
+				//this.statistics.explored = explored.size;
 				this.statistics.fringe = fringe.count;
 
 				iter = 0;
@@ -203,7 +203,7 @@ class Universe
 
 		this.statistics.actionsDone = actionsDone;
 		this.statistics.checked = checked;
-		this.statistics.explored = explored.size;
+		//this.statistics.explored = explored.size;
 		this.statistics.fringe = fringe.count;
 		this.statistics.timeEnd = Date.now();
 

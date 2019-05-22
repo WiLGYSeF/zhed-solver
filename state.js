@@ -25,7 +25,15 @@ class State
 				var gf = this.universe.goalfront[i];
 				var num = 0;
 /*
+				//initial goalfront priorities
+
+				//rarely does anything, needs reworking
+				//works well on levels 29, 51, 66
+				//changes level 45
+
 				var stack = [gf];
+
+				//counts the interacting recursively with opendist <= 0
 
 				while(stack.length > 0)
 				{
@@ -47,11 +55,10 @@ class State
 				console.log(gf);
 				console.log(num);
 
-				//scale num between 0 - 7
+				//scale num
 				var bounds = [0, this.universe.active.length];
-				var newbounds = [0, 7];
-				num = ((num - bounds[0]) / (bounds[1] - bounds[0]) * (newbounds[1] - newbounds[0]) + newbounds[0]);
-				num = -(num | 0);
+				var newbounds = [-2, 2];
+				num = ((num - bounds[0]) / (bounds[1] - bounds[0]) * (newbounds[1] - newbounds[0]) + newbounds[0]) | 0;
 
 				console.log(num);
 */
@@ -89,7 +96,7 @@ class State
 				inter = interacting[j];
 				priority = (opencells <= 0 ? 100 : 0);
 
-				//priority += this.cellList.length - i - 1;
+				//priority += (this.cellList.length - i - 1) >> 1;
 
 				//don't add cells already going to be added
 				//note these cells have different parents than the ones already added
@@ -126,10 +133,11 @@ class State
 		}
 
 		var pri;
+		var opencellcount = this.getOpenCellsCount(array);
 
 		for (var i = 0; i < cells.length; i++)
 		{
-			pri = cellpri[i] + this.getOpenCellsCount(array) - this.cellList.length;
+			pri = cellpri[i] + opencellcount - this.cellList.length;
 
 			actions.push({
 				"pri": pri,
