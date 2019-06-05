@@ -250,15 +250,35 @@ function resetStateInfo()
 	e_urlshort.innerHTML = "";
 }
 
-function updateStateCount(stopped=false)
+function updateStateCount(isDone, isStopped)
 {
 	if(window._universe == null)
 		return;
 
 	var s = "(" + window._universe.statistics.actionsDone + " actions done";
 
-	if(stopped)
+	if(isStopped)
 		s += ", stopped";
+
+	if(isStopped || isDone)
+	{
+		var time = window._universe.statistics.timeEnd - window._universe.statistics.timeStart;
+		var unit = "ms";
+
+		if(time > 1000)
+		{
+			time /= 1000;
+			unit = "s";
+
+			if(time > 60)
+			{
+				time /= 60;
+				unit = "m";
+			}
+		}
+
+		s += ", finished in " + time + " " + unit;
+	}
 
 	s += ")";
 	e_statecount.innerHTML = s;
@@ -293,7 +313,7 @@ function solve()
 			e_solving.innerHTML = "";
 
 			clearInterval(window._updateTimer);
-			updateStateCount();
+			updateStateCount(true, false);
 
 			console.log(window._solvedstate);
 			console.log(window._universe.statistics);
@@ -304,7 +324,9 @@ function solve()
 		e_solving.innerHTML = "Solving... ";
 		e_stop.style.display = "";
 
-		window._updateTimer = setInterval(updateStateCount, 40);
+		window._updateTimer = setInterval(function(){
+			updateStateCount(false, false)
+		}, 40);
 	}
 }
 
@@ -316,7 +338,7 @@ function stopSolving()
 	}
 
 	clearInterval(window._updateTimer);
-	updateStateCount(true);
+	updateStateCount(false, true);
 }
 
 // https://html-online.com/articles/get-url-parameters-javascript/
