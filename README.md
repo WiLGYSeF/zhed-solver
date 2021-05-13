@@ -1,5 +1,7 @@
 # Zhed Solver
 
+** This project was an old coding exercise and is no longer maintained **
+
 This is a [Zhed](https://play.google.com/store/apps/details?id=com.groundcontrol.zhed&hl=en_US "Zhed") puzzle game solver using state space search algorithms.
 This runs locally on a browser, written in Javascript.
 
@@ -14,5 +16,3 @@ Once ready, press the solve button. The actions counter will increment, showing 
 Note that if you choose a complicated level, your computer may run out of memory! Be cautious and watch your memory usage for very complex levels.
 
 Pressing `Get URL Shortcut` will create a URL with the current grid state so you can go to saved states without having to enter them in manually.
-
-For an in-depth description, visit [here](https://www.wilgysef.com/articles/zhed-solver/).
