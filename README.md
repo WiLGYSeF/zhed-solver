@@ -1,6 +1,6 @@
 # Zhed Solver
 
-** This project was an old coding exercise and is no longer maintained **
+## **This project was an old coding exercise and is no longer maintained**
 
 This is a [Zhed](https://play.google.com/store/apps/details?id=com.groundcontrol.zhed&hl=en_US "Zhed") puzzle game solver using state space search algorithms.
 This runs locally on a browser, written in Javascript.
